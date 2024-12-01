@@ -22,5 +22,5 @@ services:
       - ${NETWORK_NAME}
 
 networks:
-  ${NETWORK_NAME}:
+  app-network:
     driver: bridge
