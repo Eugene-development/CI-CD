@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  svelte:
+    image: ${REGISTRY}/${PROJECT}:${IMAGE_TAG}
+    container_name: "${COMPOSE_PROJECT_NAME}_PROJECT"
+    restart: always
+    networks:
+      - ${NETWORK_NAME}
+
+  nginx:
+    image: nginx:alpine
+    container_name: "${COMPOSE_PROJECT_NAME}_NGINX"
+    ports:
+      - "${PORT}:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - svelte
+    networks:
+      - ${NETWORK_NAME}
+
+networks:
+  ${NETWORK_NAME}:
+    driver: bridge
